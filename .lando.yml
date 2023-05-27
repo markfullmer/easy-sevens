@@ -1,0 +1,4 @@
+name: easy-sevens
+recipe: lamp
+config:
+  webroot: public_html
