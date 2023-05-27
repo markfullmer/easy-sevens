@@ -76,8 +76,8 @@ $random = rand(0, $total);
 $word = trim($list[$random]);
 $shuffled = str_shuffle($word);
 echo "<h2>" . strtoupper($shuffled) . "</h2>";
-?>
-<form action="/index.php" method="post">
+echo '<form action="//' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] . '" method="POST">'; ?>
+
 <input type="text" pattern="[<?php echo $shuffled; echo strtoupper($shuffled); ?>]{7}" autofocus title="Must be seven letters, matching <?php echo strtoupper($shuffled); ?>" required name="guess"></input>
 <input type="hidden" name="actual" value="<?php echo base64_encode($word); ?>" />
 <input type="hidden" name="streak" value="<?php echo $streak; ?>" />
