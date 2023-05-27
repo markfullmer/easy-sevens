@@ -45,7 +45,7 @@
 <?php
 
 
-$words = file_get_contents('../ers.csv');
+$words = file_get_contents('../ersn.csv');
 $list = explode(PHP_EOL, $words);
 $clean = [];
 foreach ($list as $item) {
@@ -74,7 +74,9 @@ else {
 $total = count($list);
 $random = rand(0, $total);
 $word = trim($list[$random]);
-$shuffled = str_shuffle($word);
+$stringParts = str_split($word);
+sort($stringParts);
+$shuffled = implode($stringParts); // abc
 echo "<h2>" . strtoupper($shuffled) . "</h2>";
 echo '<form action="//' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] . '" method="POST">'; ?>
 
