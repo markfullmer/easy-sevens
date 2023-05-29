@@ -40,10 +40,10 @@
     </style>
 </head>
 <body>
-<a href="/?list=q-no-u">Q without U words</a> |
-<a href="/?list=ersn">'ERSN' words</a> |
-<a href="/?list=erst">'ERST' words</a> |
-<a href="/?list=ers">'ERS' words</a>
+<a href="/?list=q-no-u">Q without U words (75)</a> |
+<a href="/?list=ersn">'ERSN' words (693)</a> |
+<a href="/?list=erst">'ERST' words (1175)</a> |
+<a href="/?list=ings">'INGS' words (626)</a>
 <hr>
 
 <?php
