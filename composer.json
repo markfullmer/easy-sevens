@@ -1,0 +1,21 @@
+{
+    "name": "markfullmer/easy-sevens",
+    "description": "Work on pattern recognition of seven-letter words to improve your Scrabble game.",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Markfullmer\\EasySevens\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "markfullmer",
+            "email": "mfullmer@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "guzzlehttp/guzzle": "7.7.x-dev"
+    }
+}

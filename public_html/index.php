@@ -12,15 +12,17 @@
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://scrabble.markfullmer.com/" />
     <style>
-      body {
-        font-size: 1rem;
-        font-family: monospace;
-        margin: auto;
-        width: 50%;
+      @media screen and (min-width: 640px) {
+        body {
+          font-size: 2rem;
+          font-family: monospace;
+          margin: auto;
+          width: 50%;
+        }
       }
       input[type="text"]
       {
-        font-size: 3rem;
+        font-size: 2rem;
         font-weight: bold;
         font-family: monospace;
         text-transform: uppercase;
@@ -48,9 +50,17 @@
 
 <?php
 
+require '../vendor/autoload.php';
+
+use GuzzleHttp\Client;
+$client = new Client([
+  'base_uri' => 'https://api.dictionaryapi.dev/api/v2/entries/en/',
+  'timeout'  => 2.0,
+]);
+
 $list = 'ersn';
 if (isset($_GET['list'])) {
-  if (in_array($_GET['list'], ['q-no-u', 'ersn', 'erst', 'ers'])) {
+  if (in_array($_GET['list'], ['q-no-u', 'ersn', 'erst', 'ers', 'ings'])) {
     $list = $_GET['list'];
   }
 }
@@ -64,24 +74,44 @@ foreach ($list as $item) {
 
 $streak = 0;
 if (isset($_REQUEST['guess']) && isset($_REQUEST['actual'])) {
+  $actual = base64_decode($_REQUEST['actual']);
   $guess = trim(strtoupper($_REQUEST['guess']));
+  try {
+    $response = $client->request('GET', $actual);
+    $code = $response->getStatusCode();
+    if ($code === 200) {
+      $body = $response->getBody();
+      $dict = json_decode($body, TRUE);
+      if (isset($dict[0]['meanings'][0]['definitions'][0]['definition'])) {
+        $definition = $dict[0]['meanings'][0]['definitions'][0]['definition'];
+      }
+    }
+  }
+  catch  (Exception $e) {
+    // Probably a 404.
+  }
   if (in_array($guess, $clean)) {
-    echo '<h2>Got it!</h2>';
+    echo '<p>Got it!</p>';
+    if (isset($definition)) {
+      echo '<p>' . $definition . '</p>';
+    }
     $streak = $_REQUEST['streak'] ?: 0;
     $streak = (int) $streak;
     $streak++;
     $next = $streak + 1;
     echo 'Current streak: <div class="firework">' . $streak . '</div>';
-    echo "<h2>Try for $next?</h2>";
+    echo "<p>Try for $next?</p>";
   }
   else {
-    $actual = base64_decode($_REQUEST['actual']);
-    echo "<h2>Nope! The word was <a href='https://dictionary.com/browse/" . $actual . "'>" . $actual . "</a></h2>";
-    echo "<h2>Try again?</h2>";
+    echo "<p>Nope! The word was <a href='https://www.thefreedictionary.com/" . $actual . "'>" . $actual . "</a></p>";
+    if (isset($definition)) {
+      echo '<p>' . $definition . '</p>';
+    }
+    echo "<p>Try again?</p>";
   }
 }
 else {
-  echo "<h2>Guess this scrambled word:</h2>";
+  echo "<p>Guess this scrambled word:</p>";
 }
 $total = count($list);
 $random = rand(0, $total);
@@ -90,7 +120,7 @@ $stringParts = str_split($word);
 sort($stringParts);
 $shuffled = implode($stringParts);
 $length = strlen($shuffled);
-echo "<h2>" . strtoupper($shuffled) . "</h2>";
+echo "<p>" . strtoupper($shuffled) . "</p>";
 echo '<form action="//' . $return . '" method="POST">';
 ?>
 
