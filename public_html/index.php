@@ -20,6 +20,11 @@
           width: 50%;
         }
       }
+      .definition {
+        border: 1px solid black;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+      }
       input[type="text"]
       {
         font-size: 2rem;
@@ -93,7 +98,7 @@ if (isset($_REQUEST['guess']) && isset($_REQUEST['actual'])) {
   if (in_array($guess, $clean)) {
     echo '<p>Got it!</p>';
     if (isset($definition)) {
-      echo '<p>' . $definition . '</p>';
+      echo '<div class="definition"><strong>' . $actual . '</strong>: ' . $definition . '</div>';
     }
     $streak = $_REQUEST['streak'] ?: 0;
     $streak = (int) $streak;
