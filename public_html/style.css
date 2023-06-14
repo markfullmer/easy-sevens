@@ -1,0 +1,31 @@
+@media screen and (min-width: 640px) {
+  body {
+    font-size: 2rem;
+    font-family: monospace;
+    margin: auto;
+    width: 50%;
+  }
+}
+.definition {
+  border: 1px solid black;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+}
+input[type="text"] {
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: monospace;
+  text-transform: uppercase;
+}
+.firework-wrapper {
+  position: relative;
+  display: inline;
+}
+.firework {
+  background-image: url("firework.gif?<?php echo rand(0,1000); ?>");
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  display: inline;
+  background-size: contain;
+}
