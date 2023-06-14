@@ -12,47 +12,15 @@
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://scrabble.markfullmer.com/" />
     <style>
-      @media screen and (min-width: 640px) {
-        body {
-          font-size: 2rem;
-          font-family: monospace;
-          margin: auto;
-          width: 50%;
-        }
-      }
-      .definition {
-        border: 1px solid black;
-        padding: 1rem;
-        margin-bottom: 0.5rem;
-      }
-      input[type="text"]
-      {
-        font-size: 2rem;
-        font-weight: bold;
-        font-family: monospace;
-        text-transform: uppercase;
-      }
-      .firework-wrapper {
-        position: relative;
-        display: inline;
-      }
-      .firework {
-        background-image: url("firework.gif?<?php echo rand(0,1000); ?>");
-        width: 200px;
-        height: 200px;
-        position: absolute;
-        display: inline;
-        background-size: contain;
-      }
+      <?php require 'style.css'; ?>
     </style>
 </head>
 <body>
-<a href="/?list=q-no-u">Q without U words (75)</a> |
-<a href="/?list=ersn">'ERSN' words (693)</a> |
-<a href="/?list=erst">'ERST' words (1175)</a> |
-<a href="/?list=ings">'INGS' words (626)</a>
-<hr>
-
+  <a href="/?list=q-no-u">Q without U words (75)</a> |
+  <a href="/?list=ersn">'ERSN' words (693)</a> |
+  <a href="/?list=erst">'ERST' words (1175)</a> |
+  <a href="/?list=ings">'INGS' words (626)</a>
+  <hr>
 <?php
 
 require '../vendor/autoload.php';
@@ -89,30 +57,28 @@ if (isset($_REQUEST['guess']) && isset($_REQUEST['actual'])) {
       $dict = json_decode($body, TRUE);
       if (isset($dict[0]['meanings'][0]['definitions'][0]['definition'])) {
         $definition = $dict[0]['meanings'][0]['definitions'][0]['definition'];
+        $definition = '<div class="definition"><strong>' . $actual . '</strong>: ' . $definition . '</div>';
       }
     }
   }
   catch  (Exception $e) {
     // Probably a 404.
   }
+  if (isset($definition)) {
+    echo $definition;
+  }
   if (in_array($guess, $clean)) {
-    echo '<p>Got it!</p>';
-    if (isset($definition)) {
-      echo '<div class="definition"><strong>' . $actual . '</strong>: ' . $definition . '</div>';
-    }
+    echo 'Got it! ';
     $streak = $_REQUEST['streak'] ?: 0;
     $streak = (int) $streak;
     $streak++;
     $next = $streak + 1;
-    echo 'Current streak: <div class="firework">' . $streak . '</div>';
-    echo "<p>Try for $next?</p>";
+    echo 'Current streak: <span class="firework">' . $streak . '</span>';
+    echo "<br />Try for $next? ";
   }
   else {
-    echo "<p>Nope! The word was <a href='https://www.thefreedictionary.com/" . $actual . "'>" . $actual . "</a></p>";
-    if (isset($definition)) {
-      echo '<p>' . $definition . '</p>';
-    }
-    echo "<p>Try again?</p>";
+    echo "Nope! The word was <a href='https://www.thefreedictionary.com/" . $actual . "'>" . $actual . "</a>";
+    echo "Try again?";
   }
 }
 else {
@@ -129,9 +95,9 @@ echo "<p>" . strtoupper($shuffled) . "</p>";
 echo '<form action="//' . $return . '" method="POST">';
 ?>
 
-<input type="text" pattern="[<?php echo $shuffled; echo strtoupper($shuffled); ?>]{<?php echo $length; ?>}" autofocus title="Must be seven letters, matching <?php echo strtoupper($shuffled); ?>" required name="guess"></input>
-<input type="hidden" name="actual" value="<?php echo base64_encode($word); ?>" />
-<input type="hidden" name="streak" value="<?php echo $streak; ?>" />
-</form>
-</body>
+      <input type="text" pattern="[<?php echo $shuffled; echo strtoupper($shuffled); ?>]{<?php echo $length; ?>}" autofocus title="Must be seven letters, matching <?php echo strtoupper($shuffled); ?>" required name="guess"></input>
+      <input type="hidden" name="actual" value="<?php echo base64_encode($word); ?>" />
+      <input type="hidden" name="streak" value="<?php echo $streak; ?>" />
+    </form>
+  </body>
 </html>
