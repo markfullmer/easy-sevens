@@ -18,8 +18,8 @@
 <body>
   <a href="/?list=q-no-u">Q without U words (75)</a> |
   <a href="/?list=ersn">'ERSN' words (693)</a> |
-  <a href="/?list=erst">'ERST' words (1175)</a> |
-  <a href="/?list=ings">'INGS' words (626)</a>
+  <a href="/?list=aert">'AERT' words (545)</a> |
+  <a href="/?list=eing">'EING' words (448)</a>
   <hr>
 <?php
 
@@ -31,9 +31,9 @@ $client = new Client([
   'timeout'  => 2.0,
 ]);
 
-$list = 'ersn';
+$list = 'aert';
 if (isset($_GET['list'])) {
-  if (in_array($_GET['list'], ['q-no-u', 'ersn', 'erst', 'ers', 'ings'])) {
+  if (in_array($_GET['list'], ['q-no-u', 'ersn', 'erst', 'ers', 'ings', 'aert', 'eing'])) {
     $list = $_GET['list'];
   }
 }
