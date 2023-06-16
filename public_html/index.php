@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-  <a href="/?list=q-no-u">Q without U words (75)</a> |
+  <a href="/?list=q-no-u">Q without U words (55)</a> |
   <a href="/?list=ersn">'ERSN' words (693)</a> |
   <a href="/?list=aert">'AERT' words (545)</a> |
   <a href="/?list=eing">'EING' words (448)</a>
