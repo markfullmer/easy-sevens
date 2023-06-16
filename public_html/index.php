@@ -44,7 +44,8 @@ $clean = [];
 foreach ($list as $item) {
   $clean[] = strtoupper(trim($item));
 }
-
+$complete_list = $_REQUEST['complete'] ?? '';
+$complete_items = explode(',', $complete_list);
 $streak = 0;
 if (isset($_REQUEST['guess']) && isset($_REQUEST['actual'])) {
   $actual = base64_decode($_REQUEST['actual']);
@@ -73,6 +74,7 @@ if (isset($_REQUEST['guess']) && isset($_REQUEST['actual'])) {
     $streak = (int) $streak;
     $streak++;
     $next = $streak + 1;
+    $complete_items[] = $_REQUEST['id'];
     echo 'Current streak: <span class="firework">' . $streak . '</span>';
     echo "<br />Try for $next? ";
   }
@@ -84,8 +86,14 @@ if (isset($_REQUEST['guess']) && isset($_REQUEST['actual'])) {
 else {
   echo "<p>Guess this scrambled word:</p>";
 }
-$total = count($list);
-$random = rand(0, $total);
+foreach ($complete_items as $key) {
+  unset($list[$key]);
+}
+if (empty($list)) {
+  echo 'You completed the entire list! Reload the page to start over';
+  die();
+}
+$random = array_rand($list);
 $word = trim($list[$random]);
 $stringParts = str_split($word);
 sort($stringParts);
@@ -98,6 +106,9 @@ echo '<form action="//' . $return . '" method="POST">';
       <input type="text" pattern="[<?php echo $shuffled; echo strtoupper($shuffled); ?>]{<?php echo $length; ?>}" autofocus title="Must be seven letters, matching <?php echo strtoupper($shuffled); ?>" required name="guess"></input>
       <input type="hidden" name="actual" value="<?php echo base64_encode($word); ?>" />
       <input type="hidden" name="streak" value="<?php echo $streak; ?>" />
+      <input type="hidden" name="id" value="<?php echo $random; ?>" />
+      <input type="hidden" name="complete" value="<?php echo implode(',', $complete_items); ?>" />
     </form>
   </body>
+  <?php echo count($list); ?>
 </html>
