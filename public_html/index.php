@@ -16,11 +16,6 @@
     </style>
 </head>
 <body>
-  <a href="/?list=q-no-u">Q without U words (55)</a> |
-  <a href="/?list=ersn">'ERSN' words (693)</a> |
-  <a href="/?list=aert">'AERT' words (545)</a> |
-  <a href="/?list=eing">'EING' words (448)</a>
-  <hr>
 <?php
 
 require '../vendor/autoload.php';
@@ -33,7 +28,7 @@ $client = new Client([
 
 $list = 'aert';
 if (isset($_GET['list'])) {
-  if (in_array($_GET['list'], ['q-no-u', 'ersn', 'erst', 'ers', 'ings', 'aert', 'eing'])) {
+  if (in_array($_GET['list'], ['q-no-u', 'ersn', 'erst', 'ers', 'ings', 'aert', 'eing', 'two', 'three'])) {
     $list = $_GET['list'];
   }
 }
@@ -111,4 +106,11 @@ echo '<form action="//' . $return . '" method="POST">';
     </form>
   </body>
   <?php echo count($list); ?>
+  <hr>
+  <a href="/?list=q-no-u">Q without U words (55)</a> |
+  <a href="/?list=ersn">'ERSN' words (693)</a> |
+  <a href="/?list=aert">'AERT' words (545)</a> |
+  <a href="/?list=eing">'EING' words (448)</a> |
+  <a href="/?list=two">Twos (96)</a> |
+  <a href="/?list=three">Threes (971)</a>
 </html>
