@@ -111,6 +111,6 @@ echo '<form action="//' . $return . '" method="POST">';
   <a href="/?list=ersn">'ERSN' words (693)</a> |
   <a href="/?list=aert">'AERT' words (545)</a> |
   <a href="/?list=eing">'EING' words (448)</a> |
-  <a href="/?list=two">Twos (96)</a> |
-  <a href="/?list=three">Threes (971)</a>
+  <a href="/?list=two">Twos (71)</a> |
+  <a href="/?list=three">Threes (591)</a>
 </html>
